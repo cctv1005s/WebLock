@@ -30,6 +30,7 @@ Circle.fn.draw = function(option){
     this.radius = parseInt(option.radius);
 
     option.radius = option.x = option.y = null;
+   
     //传入内置css
     option = Util.extend(option,{
         'left':(this.x - this.radius) + 'px',
@@ -44,10 +45,14 @@ Circle.fn.draw = function(option){
         'min-width':'5px',
         'min-height':'5px'
     });
+
     var element = document.createElement('div');
+    
     element.setAttribute('style',Util.styless(option));
+    
     if(!this.element)
         this.ctx.draw(element);
+
     this.element = element;
     return this;
 }
