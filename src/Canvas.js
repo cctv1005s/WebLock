@@ -10,8 +10,7 @@ var Canvas = function(ctx){
     this.ctx = ctx;
 }
 
-
-Canvas.fn = canvas.prototype;
+Canvas.fn = Canvas.prototype;
 
 /**
  * 用于创建一个直线对象
@@ -23,8 +22,26 @@ Canvas.fn.createLine = function(){
  * 用于创建一个圆对象
  */
 Canvas.fn.createCircle = function(option){
-    return new Circle(this.ctx,option);
+    return new Circle(this,option);
 }
 
-exports = module.exports = canvas;
+Canvas.fn.draw = function(element){
+    this.ctx.appendChild(element);
+}
+
+/**
+ * 获取画布的高度，只读
+ */
+Canvas.fn.height = function(){
+    return this.ctx.clientHeight;
+}
+
+/**
+ * 获取画布的宽度，只读
+ */
+Canvas.fn.width = function(){
+    return this.ctx.clientWidth;
+}
+
+exports = module.exports = Canvas;
 
