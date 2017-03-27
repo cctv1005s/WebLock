@@ -11,13 +11,15 @@ Circle.fn = Circle.prototype;
  * Circle的绘制函数，实际上为了实现数据与绘制的分离，这里的draw方法调用了传入的ctx的绘制方法
  * 而这个类只生成html代码，传给Canvas的draw方法
  * 
- * @param {objetc} option 绘制传入的参数，这些参数应该有{left:,top:,background,border,}
+ * @param {object} option 绘制传入的参数
  */
 Circle.fn.draw = function(option){
     //如果既没有初始化时传入参数，也没有后来传入参数，那么就报错
     //后面的option会覆盖前面的option
     //原有的参数不变
     option = Util.extend(this.option,option) || this.option;
+    //保存option
+    this.option = Util.extend({},option);
     if(!option)
         throw Error("至少要给圆传入一个参数");
     
@@ -46,8 +48,11 @@ Circle.fn.draw = function(option){
         'min-height':'5px'
     });
 
-    var element = document.createElement('div');
-    
+    if(!this.element)
+        var element = document.createElement('div');
+    else 
+        var element = this.element;
+
     element.setAttribute('style',Util.styless(option));
     
     if(!this.element)
@@ -56,5 +61,21 @@ Circle.fn.draw = function(option){
     this.element = element;
     return this;
 }
+
+/**
+ * 判断一个点是否在圆内
+ * 
+ * @param {object} point 传入的点，实例 {x:0,y:0}
+ */
+Circle.fn.isInCircle = function(point){
+    var distance = Util.getDistance(point,{
+        x:this.x,y:this.y
+    });
+    if(distance <= this.radius){
+        return true;
+    }
+    return false;
+}
+
 
 exports = module.exports = Circle;

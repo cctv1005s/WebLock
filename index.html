@@ -20,7 +20,7 @@
         }
 
         #area{
-            width: 100%;
+            width: 90%;
             height: 100%;
             max-width: 600px;
             margin: 0 auto;
@@ -31,56 +31,5 @@
     <div id="area">
     </div>
     <script src="http://localhost:8888/bundle.js"></script>
-    <script>
-        // //获取相对偏移坐标
-        // function getOffset (el) {
-        //     const box = el.getBoundingClientRect();
-
-        //     return {
-        //         top: box.top + window.pageYOffset - document.documentElement.clientTop,
-        //         left: box.left + window.pageXOffset - document.documentElement.clientLeft
-        //     }
-        // };
-
-        // var area = document.querySelector('.area');
-        // //画直线函数
-        // function lineTo(p1,p2){
-        //     //计算斜率
-        //     var slope = 0;
-        //     //斜率不存在的情况下
-        //     if(p2.x == p1.x){
-
-        //     }
-
-        //     var k = (p2.y - p1.y) / (p2.x - p1.x);
-        //     var width = Math.sqrt((p2.y - p1.y)*(p2.y - p1.y) + (p2.x - p1.x)*(p2.x - p1.x));
-        //     var angle = Math.atan(k) * (180/Math.PI);
-            
-        //     var style = {
-        //         position:'absolute',
-        //         left:p1.x + 'px',
-        //         top:p1.y + 'px',
-        //         width:width + 'px',
-        //         'border-bottom':'2px solid black',
-        //         '-webkit-transform-origin':'0% 0%', 
-        //         'transform':'rotate('+angle+'deg)'
-        //     };
-            
-        //     var _style = "";
-        //     for(var i in style){
-        //         _style+= i +":" + style[i] +";";
-        //     }
-        //     var html = '<div style="'+_style+'"></div>';
-        //     area.innerHTML += html;
-        // }
-
-        // lineTo({x:0,y:0},{x:100,y:100});
-        // area.addEventListener('mousemove',function(e){
-        //     var x = e.clientX,
-        //         y = e.clientY;
-        //     area.innerHTML = "";
-        //     lineTo({x:0,y:0},{x:x,y:y});
-        // });
-    </script>
 </body>
 </html>

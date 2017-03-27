@@ -15,8 +15,8 @@ Canvas.fn = Canvas.prototype;
 /**
  * 用于创建一个直线对象
  */
-Canvas.fn.createLine = function(){
-
+Canvas.fn.createLine = function(option){
+    return new Line(this,option);
 }
 /**
  * 用于创建一个圆对象
