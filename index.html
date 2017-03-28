@@ -9,6 +9,7 @@
         html{
             width: 100%;
             height: 100%;
+            overflow: hidden;
         }
         
         body{
@@ -17,11 +18,12 @@
             background:#eee;
             margin: 0;
             padding: 0;
+            overflow: hidden;
         }
 
         #area{
-            width: 90%;
-            height: 100%;
+            width: 100%;
+            height: 500px;
             max-width: 600px;
             margin: 0 auto;
             background:white;
@@ -30,6 +32,13 @@
     </style>
     <div id="area">
     </div>
-    <script src="http://localhost:8888/bundle.js"></script>
+    
+    <div id="alert"></div>
+    <form id="box" >
+    <input type="radio" value="set" name="choice" checked>设置密码</input>
+    <input type="radio" value="check" name="choice">验证</input>
+    </form>
+
+    <script src="/bundle.js"></script>
 </body>
 </html>

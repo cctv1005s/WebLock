@@ -30,9 +30,7 @@ Circle.fn.draw = function(option){
     this.x = parseInt(option.x);
     this.y = parseInt(option.y);
     this.radius = parseInt(option.radius);
-
     option.radius = option.x = option.y = null;
-   
     //传入内置css
     option = Util.extend(option,{
         'left':(this.x - this.radius) + 'px',
@@ -77,5 +75,8 @@ Circle.fn.isInCircle = function(point){
     return false;
 }
 
+Circle.fn.center = function(){
+    return {x:this.x,y:this.y};
+}
 
 exports = module.exports = Circle;
