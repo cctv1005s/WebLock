@@ -31,19 +31,23 @@ var WebLock = function(element){
     this.area = area;
     this.canvas = canvas;
     this.lines = [];
-    this.activeLine = null;
     this.circles = circles;
-    this.callbacks = [];
+    this.callback = function(){};
 }
 
 WebLock.fn = WebLock.prototype;
 
 WebLock.fn.start = function(){
-    var {area,canvas,lines,activeLine,circles} = this;
+    var {area,canvas,lines,ctiveLine,circles} = this;
+    var activeLine = null;
     var self = this;
     //记录图案锁的密码
     var password = [];
     var start = function(e){
+        password = [];
+        if(self.lines.length !== 0 && activeLine == null){
+            self.clear();
+        }
         var point = {x:e.touches[0].clientX,y:e.touches[0].clientY};
         var theCircle = inCircle(point,circles);
         if(!theCircle)
@@ -64,9 +68,9 @@ WebLock.fn.start = function(){
         if(theCircle && !theCircle.isActive){
             //已经到达圆的中心了
             activeLine.draw(Util.extend({to:theCircle.center()},self.config.line));
-            lines.push(activeLine);
+            self.lines.push(activeLine);
             activeLine = canvas.createLine({from:theCircle.center(),to:theCircle.center()});
-            //设置经过的圆为激活状态
+            //设置经过的圆为激活状态var password = [];
             theCircle.isActive = true;
             theCircle.draw(self.config.active);
             //记录密码
@@ -78,14 +82,16 @@ WebLock.fn.start = function(){
 
     var end = function(e){
         activeLine.clear();
-        var cbs = self.callbacks;
-        for(var i in cbs){
-            cbs[i].call(self,password,self.clear);
-        }
+        activeLine = null;
+        var cbs = self.callback;
+        cbs.call(self,password,self.clear);
+    };
+
+    this.disable = function(){
         area.removeEventListener('touchstart',start);
         area.removeEventListener('touchmove',move);
         area.removeEventListener('touchend',end);
-    };
+    }
 
     area.addEventListener('touchstart',start);
     area.addEventListener('touchmove',move);
@@ -94,7 +100,7 @@ WebLock.fn.start = function(){
 }
 
 WebLock.fn.done = function(fn){
-    this.callbacks.push(fn);
+    this.callback = fn;
 }
 
 WebLock.fn.clear = function(){
@@ -103,13 +109,14 @@ WebLock.fn.clear = function(){
     for(var i in lines){
         lines[i].clear();
     }
-    lines = this.lines = [];
+    this.lines = [];
     //将圆背景清除
     var circles = this.circles;
     for(var i in circles){
        circles[i].draw({
         background:'white'
        });
+       circles[i].isActive = false;
     }
 }
 

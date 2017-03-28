@@ -64,8 +64,11 @@ Line.fn.calcAngle = function(p1,p2){
 }
 
 Line.fn.clear = function(){
-    if(this.element)
+    if(this.element){
         this.element.style['display'] = 'none';
+        this.element.parentNode.removeChild(this.element);
+    }
+        
 }
 
 exports = module.exports = Line;
