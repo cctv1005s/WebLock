@@ -70,9 +70,10 @@
 
     $ mocha     
 
+## Demo
 
-
-
+请访问 https://cctv1005s.github.io/ 
+仅支持手机端，浏览器端请开启手机调试模式
 
 
 
