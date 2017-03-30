@@ -6,6 +6,11 @@ var Line = function(ctx,option){
 
 Line.fn = Line.prototype;
 
+/**
+ * 直线绘制方法
+ * 
+ * @param {object} 传入两个点from,to以及css样式，在dom中绘制这条直线
+ */
 Line.fn.draw = function(option){
     option = Util.extend(this.option,option) || this.option;
     if(!option)
@@ -50,6 +55,12 @@ Line.fn.draw = function(option){
     return this;
 }
 
+/**
+ * 根据两个点计算这条直线宣传的角度
+ * 
+ * @param {object} p1 第一个点
+ * @param {object} p2 第二个点
+ */
 Line.fn.calcAngle = function(p1,p2){
     var slope = 0;
     //斜率不存在的情况下
@@ -63,6 +74,9 @@ Line.fn.calcAngle = function(p1,p2){
     return angle;
 }
 
+/**
+ * 清除这条直线
+ */
 Line.fn.clear = function(){
     if(this.element){
         this.element.style['display'] = 'none';

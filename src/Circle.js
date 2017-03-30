@@ -9,7 +9,6 @@ Circle.fn = Circle.prototype;
 
 /**
  * Circle的绘制函数，实际上为了实现数据与绘制的分离，这里的draw方法调用了传入的ctx的绘制方法
- * 而这个类只生成html代码，传给Canvas的draw方法
  * 
  * @param {object} option 绘制传入的参数
  */
@@ -75,6 +74,9 @@ Circle.fn.isInCircle = function(point){
     return false;
 }
 
+/**
+ * 返回这一个圆的圆心
+ */
 Circle.fn.center = function(){
     return {x:this.x,y:this.y};
 }

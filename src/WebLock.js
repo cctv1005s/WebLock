@@ -33,22 +33,32 @@ var WebLock = function(element){
     this.lines = [];
     this.circles = circles;
     this.callback = function(){};
+    this.isStart = false;
 }
 
 WebLock.fn = WebLock.prototype;
 
+/**
+ * 图案锁绘制开始函数
+ */
 WebLock.fn.start = function(){
+    if(this.isStart)
+        return;
+    this.isStart = true;
+
     var {area,canvas,lines,ctiveLine,circles} = this;
     var activeLine = null;
     var self = this;
     //记录图案锁的密码
     var password = [];
+    //偏移量
+    var {left,top} = this.canvas.getOffset();
     var start = function(e){
         password = [];
         if(self.lines.length !== 0 && activeLine == null){
             self.clear();
         }
-        var point = {x:e.touches[0].clientX,y:e.touches[0].clientY};
+        var point = {x:e.touches[0].clientX - left,y:e.touches[0].clientY - top};
         var theCircle = inCircle(point,circles);
         if(!theCircle)
             return ;
@@ -61,7 +71,7 @@ WebLock.fn.start = function(){
     };
 
     var move = function(e){
-        var point = {x:e.touches[0].clientX,y:e.touches[0].clientY};
+        var point = {x:e.touches[0].clientX - left,y:e.touches[0].clientY - top};
         var theCircle = inCircle(point,circles);
         if(!activeLine)
             return ;
@@ -87,10 +97,14 @@ WebLock.fn.start = function(){
         cbs.call(self,password,self.clear);
     };
 
+    /**
+     * 停止监听
+     */
     this.disable = function(){
         area.removeEventListener('touchstart',start);
         area.removeEventListener('touchmove',move);
         area.removeEventListener('touchend',end);
+        this.isStart = false;
     }
 
     area.addEventListener('touchstart',start);
@@ -99,10 +113,16 @@ WebLock.fn.start = function(){
     return this;
 }
 
+/**
+ * 图案绘制完毕后调用的函数
+ */
 WebLock.fn.done = function(fn){
     this.callback = fn;
 }
 
+/**
+ * 清楚直线以及将所有的圆恢复到初态
+ */
 WebLock.fn.clear = function(){
     //将直线清除
     var lines = this.lines;
@@ -113,13 +133,16 @@ WebLock.fn.clear = function(){
     //将圆背景清除
     var circles = this.circles;
     for(var i in circles){
-       circles[i].draw({
-        background:'white'
-       });
+       circles[i].draw(this.config.circle);
        circles[i].isActive = false;
     }
 }
 
+/**
+ * 设置图案锁的相关配置信息
+ * 
+ * @param {object} config 配置信息，可以配置line,circle,以及被选中的圆的样式
+ */
 WebLock.fn.config = function(config){
     config = config||{};
     //普通直线的样式
@@ -138,7 +161,7 @@ WebLock.fn.config = function(config){
     //被选中的圆的样式
     var active = config.active||{};
     this.config.active = {
-        background:circle.background || 'rgb(255,0,255)',
+        background:circle.background || 'rgb(255,255,0)',
         border:circle.border||'1px solid grey'
     };
 }
