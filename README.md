@@ -72,7 +72,7 @@
 
 ## Demo
 
-请访问 https://cctv1005s.github.io/ 
+请访问 https://cctv1005s.github.io/ (暂时删除了Demo)
 仅支持手机端，浏览器端请开启手机调试模式
 
 
